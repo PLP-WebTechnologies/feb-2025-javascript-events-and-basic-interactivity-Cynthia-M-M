@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Creating a simple webpage with basic structure and form validation">
+    <meta name="author" content="Developer Cynthia">
+    <title>My First Webpage with Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 0;
+        }
+
+        header, footer {
+            background: #0c0c0c;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #7c3556;
+            text-decoration: none;
+        }
+
+        section {
+            margin-bottom: 30px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+
+        .success {
+            color: green;
+            font-size: 16px;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #d3ff6d;
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            background-color: #0e0d0d;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        .input-error {
+            border-color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Welcome to My Webpage</h1>
+        <p>Explore my website to learn more about what we do and the services we offer.</p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section id="home">
+            <h2>Home Section</h2>
+            <p>Welcome to this homepage. We are excited you are here. Our goal is to provide high-quality services to help you succeed in the digital world.</p>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We are a passionate team dedicated to creating websites that are not only functional but also beautiful. With years of experience in web development, we have helped many businesses establish their online presence.</p>
+        </section>
+
+        <section id="services">
+            <h2>Our Services</h2>
+            <p>We offer a wide range of services to meet your needs:</p>
+            <ul>
+                <li>Web Development</li>
+                <li>App Development</li>
+                <li>Consulting</li>
+                <li>SEO and Digital Marketing</li>
+                <li>E-commerce Solutions</li>
+            </ul>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <h3>Form Example with Validation</h3>
+            <form id="myForm">
+                <label for="name">Name: </label>
+                <input type="text" id="name" name="name" required><br><br>
+
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="message">Message: </label>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+                <input type="submit" value="Submit">
+            </form>
+
+            <p id="error-message" class="error"></p>
+            <p id="success-message" class="success"></p>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>Contact us at <a href="mailto:contact@mywebsite.com">contact@mywebsite.com</a></p>
+        <p>&copy; 2025 My Simple Webpage</p>
+    </footer>
+
+    <!-- JavaScript for Form Validation and Interactivity -->
+    <script>
+        // Event Listener for form submit
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the form from submitting
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const errorMessage = document.getElementById('error-message');
+            const successMessage = document.getElementById('success-message');
+
+            // Reset messages and input styles
+            errorMessage.textContent = '';
+            successMessage.textContent = '';
+            document.getElementById('name').classList.remove('input-error');
+            document.getElementById('email').classList.remove('input-error');
+            document.getElementById('message').classList.remove('input-error');
+
+            // Form validation
+            let valid = true;
+
+            // Validate name field
+            if (name === '') {
+                errorMessage.textContent = 'Name is required.';
+                document.getElementById('name').classList.add('input-error');
+                valid = false;
+            }
+
+            // Validate email field
+            if (email === '') {
+                errorMessage.textContent = 'Email is required.';
+                document.getElementById('email').classList.add('input-error');
+                valid = false;
+            } else {
+                // Simple email pattern check using regular expression
+                const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if (!emailPattern.test(email)) {
+                    errorMessage.textContent = 'Please enter a valid email address.';
+                    document.getElementById('email').classList.add('input-error');
+                    valid = false;
+                }
+            }
+
+            // Validate message field
+            if (message === '') {
+                errorMessage.textContent = 'Message is required.';
+                document.getElementById('message').classList.add('input-error');
+                valid = false;
+            }
+
+            // If form is valid, show success message and reset inputs
+            if (valid) {
+                successMessage.textContent = 'Form submitted successfully!';
+                alert('Form submitted successfully!');
+                // You can reset the form here if needed
+                // document.getElementById('myForm').reset();
+            }
+        });
+    </script>
+
+</body>
+</html>
