@@ -210,8 +210,16 @@
             if (valid) {
                 successMessage.textContent = 'Form submitted successfully!';
                 alert('Form submitted successfully!');
-                // You can reset the form here if needed
-                // document.getElementById('myForm').reset();
+                
+                // Reset form fields and remove error styles
+                setTimeout(function() {
+                    document.getElementById('myForm').reset(); // Reset the form fields
+                    errorMessage.textContent = ''; // Clear error message
+                    successMessage.textContent = ''; // Clear success message
+                    document.getElementById('name').classList.remove('input-error');
+                    document.getElementById('email').classList.remove('input-error');
+                    document.getElementById('message').classList.remove('input-error');
+                }, 2000); // Clear messages after 2 seconds
             }
         });
     </script>
